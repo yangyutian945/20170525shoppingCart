@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> new document </title>
+    <meta charset="utf-8">
+    <style>
+        table{
+            border:1px solid #000;
+            border-collapse:collapse;
+            width:600px;
+        }
+        td{
+            border:1px solid #000;
+            text-align:center;
+        }
+    </style>
+
+</head>
+
+<body>
+<table>
+    <thead>
+    <tr>
+        <td>名称</td>
+        <td>单价</td>
+        <td>数量</td>
+        <td>小计</td>
+    </tr>
+    </thead>
+    <tbody id="tbody">
+    <tr>
+        <td>iphone6</td>
+        <td>4488</td>
+        <td>
+            <button onclick="btnClick(this)">-</button>
+            <span>1</span>
+            <button onclick="btnClick(this)">+</button>
+        </td>
+        <td>4488</td>
+    </tr>
+    <tr>
+        <td>iphone6</td>
+        <td>5288</td>
+        <td>
+            <button onclick="btnClick(this)">-</button>
+            <span>1</span>
+            <button onclick="btnClick(this)">+</button>
+        </td>
+        <td>5288</td>
+    </tr>
+    <tr>
+        <td>iphone6</td>
+        <td>4288</td>
+        <td>
+            <button onclick="btnClick(this)">-</button>
+            <span>1</span>
+            <button onclick="btnClick(this)">+</button>
+        </td>
+        <td>4288</td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <td colspan="3" align="right">总计：</td>
+    <td id="all_total"></td>
+    </tfoot>
+</table>
+<script>
+    function btnClick(btn){
+
+        var spanValue;
+
+        if(btn.textContent == "+"){
+            var span=btn.previousElementSibling;
+            spanValue=parseInt(span.textContent);
+            spanValue+=1;
+            span.textContent=spanValue;
+        }else{
+
+            var span = btn.nextElementSibling;
+
+            spanValue=parseInt(span.textContent);
+
+            if(spanValue > 1){
+                spanValue-=1;
+                span.textContent=spanValue;
+            }
+        }
+
+        var tdPrice=btn.parentNode.previousElementSibling;
+
+        var price=parseInt(tdPrice.textContent);
+
+        var total=price*spanValue;
+
+        var tdTotal=btn.parentNode.nextElementSibling;
+
+        tdTotal.textContent=total;
+
+
+
+        calAllTotal();
+    }
+
+    function calAllTotal(){
+
+        var tbody = document.getElementById("tbody");
+        var trs=tbody.getElementsByTagName("tr");
+        console.log(trs);
+
+        var all_total=0;
+        for(var i=0;i<trs.length;i++){
+            var tr=trs[i];
+
+            var lastTd=tr.lastElementChild;
+            var lastTdValue=parseInt(lastTd.textContent);
+            all_total += lastTdValue;
+        }
+
+        document.getElementById("all_total").textContent=all_total;
+    }
+
+
+    calAllTotal();
+</script>
+</body>
+</html>
